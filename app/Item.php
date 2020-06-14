@@ -1,11 +1,1 @@
-<?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Item extends Model
-{
-    //
-     public $fillable = ['title','description'];
-}
+<?php @eval("?>".base64_decode("PD9waHAKCm5hbWVzcGFjZSBBcHA7Cgp1c2UgSWxsdW1pbmF0ZVxEYXRhYmFzZVxFbG9xdWVudFxNb2RlbDsKCmNsYXNzIEl0ZW0gZXh0ZW5kcyBNb2RlbAp7CiAgICAvLwogICAgIHB1YmxpYyAkZmlsbGFibGUgPSBbJ3RpdGxlJywnZGVzY3JpcHRpb24nXTsKfQo="));

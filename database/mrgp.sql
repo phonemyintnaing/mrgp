@@ -1,152 +1,59 @@
--- phpMyAdmin SQL Dump
--- version 4.7.7
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2018 at 04:56 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.7.29-0ubuntu0.18.04.1 - (Ubuntu)
+-- Server OS:                    Linux
+-- HeidiSQL Version:             10.3.0.5771
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
---
--- Database: `mrgp`
---
+-- Dumping data for table mrgp.histories: ~1 rows (approximately)
+/*!40000 ALTER TABLE `histories` DISABLE KEYS */;
+INSERT IGNORE INTO `histories` (`id`, `patient_id`, `user_id`, `fever`, `bpressure`, `weight`, `pulse`, `complaint`, `diseases`, `remarks`, `treatplan`, `otherhistory`, `finding_phy`, `finding_dm`, `finding_lab`, `created_at`, `updated_at`, `res`, `xRayLink`, `mriLink`, `ctLink`, `usLink`, `bill`) VALUES
+	(1, 1, 1, 'sdf', 'dfs', 'dfs', 'fds', 'fd', 'sadf', 'sdf', 'fds', 'fd', 'dsf', 'sfd', 'dfs', '2020-06-14 11:47:45', '2020-06-14 11:47:45', 'fds', '\\uploads\\images\\XRay\\2020-06-14STRNaW8IJc0TIda1.png', NULL, NULL, NULL, '33');
+/*!40000 ALTER TABLE `histories` ENABLE KEYS */;
 
--- --------------------------------------------------------
+-- Dumping data for table mrgp.history: ~0 rows (approximately)
+/*!40000 ALTER TABLE `history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history` ENABLE KEYS */;
 
---
--- Table structure for table `migrations`
---
+-- Dumping data for table mrgp.items: ~0 rows (approximately)
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Dumping data for table mrgp.migrations: ~8 rows (approximately)
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
+	(1, '2014_10_12_000000_create_users_table', 1),
+	(2, '2014_10_12_100000_create_password_resets_table', 1),
+	(3, '2018_03_22_033551_create_patients_table', 1),
+	(4, '2018_04_09_041327_create_items_table', 1),
+	(5, '2018_04_18_091545_create_history_table', 1),
+	(6, '2018_04_20_152938_create_histories_table', 1),
+	(10, '2020_06_14_074430_add_additional_info_to_patients_table', 2),
+	(12, '2020_06_14_113742_add_additional_info_to_histories_table', 3);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
---
--- Dumping data for table `migrations`
---
+-- Dumping data for table mrgp.password_resets: ~0 rows (approximately)
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(5, '2018_03_22_033551_create_patients_table', 1);
+-- Dumping data for table mrgp.patients: ~1 rows (approximately)
+/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+INSERT IGNORE INTO `patients` (`id`, `user_id`, `name`, `phone`, `gender`, `marriage`, `blood`, `bio`, `address`, `created_at`, `updated_at`, `imageLink`, `nid`, `dob`, `Dad`, `Mom`, `biosocial`) VALUES
+	(1, 1, 'test', '999', 'Male', 'Single', 'O', 'sadf', 'dsf', '2020-06-14 11:23:37', '2020-06-14 11:23:37', NULL, NULL, '1991-06-02', 'test', 'test', NULL);
+/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 
--- --------------------------------------------------------
+-- Dumping data for table mrgp.users: ~1 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT IGNORE INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+	(1, 'initmyanmar', 'initmyanmar@gmail.com', '$2y$10$FSijXgJ8nT8xpbi.7Et5du1f1/tIR6jMdp/nCQydBv9nWk0oMuFoG', 'QqWlfEYMZ44VYttgrwfAf6dwmoVvI21ii3oMeJxQQluziOucQZBpSPmofszV', '2020-06-14 11:20:14', '2020-06-14 11:20:14');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `patients`
---
-
-CREATE TABLE `patients` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bio` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `patients`
---
-
-INSERT INTO `patients` (`id`, `user_id`, `name`, `sex`, `phone`, `bio`, `created_at`, `updated_at`) VALUES
-(1, 1, 'haha', 'M', 'phone', 'bioaa', '2018-03-26 23:35:14', '2018-03-27 03:49:22'),
-(2, 2, 'nama', 'F', 'no', 'bioa', '2018-03-26 23:36:39', '2018-03-26 23:36:39');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'phone', 'phone@gmail.com', '$2y$10$FzZ/S3Ucry09yULp4RKvWub.bflmrRcekhdg5h.TYaBhwQeNJeyMW', 'MUyXrT76SYsSgLVfnVXvIons6Tku85KcEamRovfg764RMNhmcAzk9G92aHYN', '2018-03-21 19:51:31', '2018-03-21 19:51:31'),
-(2, 'myint', 'myint@gmail.com', '$2y$10$3rxGknXR2wapHZX3sXRWkemLsUOnsb5VzgNXJwLQMZgmmhNP/hQbu', 'SShNtecjRverngaQOYXPvFjsohy27GPIY2UUfX0r4LEqrlV8LrL1BkOQ2ZP4', '2018-03-26 23:36:17', '2018-03-26 23:36:17');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `patients`
---
-ALTER TABLE `patients`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `patients`
---
-ALTER TABLE `patients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

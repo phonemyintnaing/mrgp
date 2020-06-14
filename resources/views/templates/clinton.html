@@ -1,0 +1,123 @@
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Patients List</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    Billing Information
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h5><i>&emsp;&emsp;&emsp;Billing Summary: Please Select Different Date Intervals to Summerize your Billing Informations.</i></h5>
+        </div>
+
+    </div>
+</div>
+    <div class="col-lg-12 margin-tb">
+
+            <form method="POST" name="addItem" role="form" ng-submit="callBill()">
+
+                <div class="row">
+
+                        <div class="col-md-3">
+                            <label for="startDate" class="control-label">Start Date: (MM/DD/YYYY)</label>
+
+                            <input type="date" class="form-control" 
+                                   id="startDate" ng-model="startDate" style="width: 250px;" />
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3" >
+                            <label for="text" class="control-label">End Date: (MM/DD/YYYY)</label>
+
+                            <input type="date" class="form-control" 
+                                   id="endDate" ng-model="endDate" 
+                                    ng-change='checkErr(startDate,endDate)' style="width: 250px;" />
+
+                        </div>
+                        </br>
+
+
+                </div> 
+                <div class="row"> 
+                        <span><b>{{errMessage}}</b></span> 
+
+                </div>
+            </br>
+                         <button type="submit"  class="btn btn-primary">Caculate Bill</button>
+
+
+
+            </form>
+       </div>
+
+    <div class="row">
+        <b> {{message}} </b>
+        <div>
+          <!--  Please Click <a href="">Here</a> to view details and print the bill. -->
+        </div>
+    </div>
+         <!--   {{showTable}} -->   
+
+        <div class="row" ng-show="showTable">
+           <!-- Print table -->
+
+          <!--  <input type="button" onclick="window.print()" value = "Print Bill" style="float: right;" class="btn btn-info" /> -->
+
+            <!--here bill info to print -->
+            <input type="button" ng-click="printDiv('printable', data )" value="Print Bill"  style="float: right;" class="btn btn-info" />
+
+        <div id = "printable">
+            <table class="table table-bordered pagin-table">
+                <thead>
+                    <tr>
+                      <!--  <th>No</th> -->
+                       <!-- <th>History of Present Illness</th> -->
+                       <th>Patient Name </th>
+                        <th>Patient ID</th>
+
+                        <th>Complaint</th>
+                        <th>Treatment Plan</th>
+                     <!--   <th>Diseases</th> -->
+                        <th>Remarks</th>
+                     <!--   <th>Other History</th> -->
+                    <!--    <th width="200px">Findings</th> -->
+                        <th>Bill</th>
+                        <th width="180px">Date</th>
+                    <!--    <th width="150px">Action</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+                      <!-- <td>{{ ($index + 1) }} </td> -->
+                    <!--    <td><b>Fever:</b> <i>{{ value.fever }}</i> </br> <b>Blood:</b> <i>{{ value.bpressure}}</i> </br> <b>Weight:</b> <i>{{value.weight}}</i> </br> <b>Pluse:</b> <i>{{value.pulse}}</i></td>-->
+                        <td>{{value.name}} </td>
+                        <td>{{ value.patient_id }}</td> 
+                        <td>{{value.complaint}} </td>
+                        <td>{{value.treatplan}} </td>
+                   <!--     <td>{{value.diseases}} </td> -->
+                        <td>{{value.remarks}} </td>
+                   <!--     <td>{{ value.otherhistory }}</td> -->
+                     <!--   <td>Phy: <i><b>{{ value.finding_phy}}</b></i> </br> Diagn: <i><b>{{value.finding_dm}}</b></i> </br> Lab: <i><b>{{value.finding_lab}}</b></i> </td> -->
+                        <td><b>{{ value.bill }}</b></td>
+                        <td>{{ value.created_at }}</td>
+                <!--        <td>
+                    <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-history" class="btn btn-success">Edit</button> 
+                        <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-history" class="btn btn-info">View Details</button>
+                      <!--  <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button> 
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+</div>
+
+            <!-- end print table -->
+        </div>

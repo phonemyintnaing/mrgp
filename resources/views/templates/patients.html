@@ -1,0 +1,395 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Patient Registration</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    Patients List
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h4>Patients List <button class="btn btn-success" ng-click="emptyForm()"  data-toggle="modal" data-target="#create-user">Add New Patient</button></h4>
+ 
+
+                   
+         </div>
+        <div class="pull-right" style="padding-top:10px">
+            <div class="box-tools" style="display:inline-table">
+              <div class="input-group">
+                  <input type="text" class="form-control input-sm ng-valid ng-dirty" placeholder="Search By Name" ng-change="searchDB()" ng-model="searchText" name="table_search" title="" tooltip="" data-original-title="Min character length is 3">
+                  <span class="input-group-addon">Search</span>
+              </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<table class="table table-bordered pagin-table">
+    <thead>
+        <tr>
+          <!--  <th>No</th> -->
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+         <!--   <th>Marital Status</th> -->
+            <th>Blood Type</th>
+        <!--    <th>Biography</th>
+            <th>Address</th> -->
+            <th>Phone</th>
+            <th>Registration Date</th>
+            <th width="220px">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+        <!--    <td>{{ $index + 1 }}</td> -->
+            <td>{{ value.id }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ getAge( value.dob ) }}</td>
+            <td>{{ value.gender }}</td>
+        <!--    <td>{{ value.marriage }}</td> -->
+            <td>{{ value.blood }}</td>
+         <!--    <td>{{ value.bio }}</td>
+           <td>{{ value.address }}</td> -->
+            <td>{{ value.phone }}</td>
+            <td>{{ value.created_at }} </td>
+            <td>
+            <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-data" class="btn btn-primary">View Bio</button>
+            <button  ng-click="history(value.id)"  class="btn btn-info">View Visits</button>
+           <!--  <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button> -->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+<!-- Create Modal -->
+<div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Patient Details</h4>
+            </div>
+                                
+         <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-md-6">
+                            <strong>Profile Picture* : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadImage(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                <br/>
+                                <img src="{{form.imageLink}}" width="50" height="50" alt="Myanmar" >
+                                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">View image</button>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-3">
+                            <strong>Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.name" type="text" placeholder="Name" name="name" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>Father Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.Dad" type="text" placeholder="Daddy" name="Dad" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Mother Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.Mom" type="text" placeholder="Mommy" name="Mom" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+
+
+                        <div class="row"></div>
+                         <div class="col-md-3">
+                            <strong>Phone* :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.phone" type="text" placeholder="phone" name="phone" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>NRC/Passport :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.nid" type="text" placeholder="NRC/Passport" name="nid" class="form-control" style="width: 150px;"  />
+                            </div>
+                        </div>      
+                              
+                        <div class="col-md-4">
+                            <strong>Address* : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.address" class="form-control" style="width: 300px;"  required>
+                                </textarea>
+                            </div>
+                        </div>
+                       
+                        <div class="row"></div>
+                        <div class="col-md-3">
+                            <label for="startDate" class="control-label">Date of Birth: (MM/DD/YYYY)</label>
+
+                            <input type="date" class="form-control" 
+                                   id="startDate" ng-model="form.dob" style="width: 155px;" />
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Gender* :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.gender" ng-options="x for x in sex" required />              
+                            </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Blood Type:</strong>
+                        <div class="form-group">
+                           <select ng-model="form.blood" ng-options="x for x in bloodtype"  />               
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Marital Status :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.marriage" ng-options="x for x in marital"  />              
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                    <!--    <div class="col-md-1">
+                            <strong>Age :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.age" type="text" placeholder="age" name="title" class="form-control" style="width: 50px;"required />
+                            </div>
+                        </div> -->
+                        <br>
+    
+
+                        <div class="col-md-4">
+                            <strong>Allergy Information (Drug, Sesonal, Food etc.) : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.bio" class="form-control" style="width: 350px;" >
+                                </textarea>
+                            </div>
+                        </div>
+
+                         <div class="col-md-4">
+                            <strong>Social Histroy (Smoking, Drinking etc.) : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.biosocial" class="form-control" style="width: 350px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+                <input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Patient's Details</h4>
+            </div>
+              <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-md-6">
+                            <strong>Profile Picture* : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadImage(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                <br/>
+                                <img src="{{form.imageLink}}" width="50" height="50" alt="Myanmar" >
+                                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">View image</button>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-3">
+                            <strong>Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.name" type="text" placeholder="Name" name="name" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>Father Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.Dad" type="text" placeholder="Daddy" name="Dad" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Mother Name* : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.Mom" type="text" placeholder="Mommy" name="Mom" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div>
+
+
+                        <div class="row"></div>
+                         <div class="col-md-3">
+                            <strong>Phone* :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.phone" type="text" placeholder="phone" name="phone" class="form-control" style="width: 200px;" required />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>NRC/Passport :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.nid" type="text" placeholder="NRC/Passport" name="nid" class="form-control" style="width: 150px;"  />
+                            </div>
+                        </div>      
+                              
+                        <div class="col-md-4">
+                            <strong>Address* : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.address" class="form-control" style="width: 300px;"  required>
+                                </textarea>
+                            </div>
+                        </div>
+                       
+                        <div class="row"></div>
+                        <div class="col-md-3">
+                            <label for="startDate" class="control-label">Date of Birth: (MM/DD/YYYY)</label>
+
+                            <input type="date" class="form-control" 
+                                   id="startDate" ng-model="form.dob" style="width: 155px;" />
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Gender* :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.gender" ng-options="x for x in sex" required />              
+                            </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Blood Type:</strong>
+                        <div class="form-group">
+                           <select ng-model="form.blood" ng-options="x for x in bloodtype"  />               
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Marital Status :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.marriage" ng-options="x for x in marital"  />              
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                    <!--    <div class="col-md-1">
+                            <strong>Age :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.age" type="text" placeholder="age" name="title" class="form-control" style="width: 50px;"required />
+                            </div>
+                        </div> -->
+                        <br>
+    
+
+                        <div class="col-md-4">
+                            <strong>Allergy Information (Drug, Sesonal, Food etc.) : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.bio" class="form-control" style="width: 350px;" >
+                                </textarea>
+                            </div>
+                        </div>
+
+                         <div class="col-md-4">
+                            <strong>Social Histroy (Smoking, Drinking etc.) : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.biosocial" class="form-control" style="width: 350px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- History Modal -->
+<div class="modal fade" id="history-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg"  style="" role="document">
+        <div class="modal-content">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#create-history">Add New Record </button>
+        <button type="button" class="btn btn-primary pull-right"  data-dismiss="modal">Close</button>
+
+            <table class="table table-bordered pagin-table">
+                <thead>
+                    <tr>
+                      <!--  <th>No</th> -->
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>History of Present Illness</th>
+                        <th>Treatment</th>
+                        <th>Other History</th>
+                        <th>Findings</th>
+                        <th width="220px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+                    <!--    <td>{{ $index + 1 }}</td> -->
+                        <td>{{ value.id }}</td>
+                        <td>{{ value.name }}</td>
+                        <td>{{ value.age }}</td>
+                        <td>{{ value.gender }}</td>
+                        <td>{{ value.marriage }}</td>
+                        <td>{{ value.blood }}</td>
+                          <td>
+                        <button data-toggle="modal" ng-click="edit(value.id)" data-target="#create-history" class="btn btn-primary">Edit</button>
+                        <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+                        <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">View Image</h4>
+            </div>
+        <div class="modal-body ">
+            <img src="{{form.imageLink}}" class="img-responsive">
+        </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+

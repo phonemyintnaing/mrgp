@@ -1,12 +1,10 @@
 <html lang="en">
 <head>
-	<title>Laravel 5.6</title>
+	<title>Mr. GP</title>
 	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<script src="js/angular-1.3.2/jquery.min.js"></script>
-
- 
 	<script src="js/angular-1.3.2/bootstrap.min.js"></script>
 	<!-- Angular JS -->
 
@@ -16,15 +14,40 @@
 	<script src="js/angular-1.3.2/angular-route.min.js"></script>
 	<!-- MY App -->
 	<script src="{{ asset('/app/packages/dirPagination.js') }}"></script>
-	<script src="{{ asset('/app/routes.js') }}"></script>
+	<script src="{{ asset('/app/routes.js?ver=1.1') }}"></script>
 	<script src="{{ asset('/app/services/myServices.js') }}"></script>
 	<script src="{{ asset('/app/helper/myHelper.js') }}"></script>
 	<!-- App Controller -->
-	<script src="{{ asset('/app/controllers/ItemController.js') }}"></script>
+    <script src="{{ asset('/app/controllers/ItemController.js?ver=1.1') }}"></script>
+    <script src="{{ asset('/app/controllers/PatientsController.js?ver=1.1') }}"></script>
+    <script src="{{ asset('/app/controllers/HistoriesController.js?ver=1.1') }}"></script>
+    <script src="{{ asset('/app/controllers/RecordsController.js?ver=1.1') }}"></script>
+    <script src="{{ asset('/app/controllers/ClintonController.js?ver=1.1') }}"></script>
+
+
+
 </head>
 <body ng-app="main-App">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
+			<div class="collapse navbar-collapse" style="float: right;">
+					<ul class="nav nav-pills" style="float: right;">
+					 <!--   <li class="active"><a data-toggle="pill" href="#">English	<img src="/mrgp/public/img/eng.png" alt="Myanmar" >
+						</a></li>
+					    <li><a data-toggle="pill" href="#patients_my">Myanmar
+							<img src="/mrgp/public/img/myanmar.png" alt="Myanmar" >
+					    </a></li> -->
+					    <li>
+					    	<div class="btn-group">
+					    		<p class="condensedlines">
+					    		</p>
+							   <input type="button" class="btn btn-danger btn-md"  onclick="location.href='/logout';" value="Log Out" />
+							   </div>
+
+					    </li>
+					  </ul>
+			 </div>
+
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="sr-only">Toggle Navigation</span>
@@ -32,19 +55,22 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/mrgp/public">Mr. GP</a>
+				<a class="navbar-brand" href="/" >Mr. GP</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="/mrgp/public/home">Home</a></li>
-					<li><a href="#/"></a></li>
-					<li><a href="#/items">Item</a></li>
-					<li><a href="/mrgp/public/logout"></a></li>
+				<ul class="nav nav-pills">
+					<li><a href="#">Patient Registration</a></li>
+					<li><a href="#/records">Daily Visits</a></li>
+					<li><a href="#/clinton">Billing Information</a></li>
+				<!--	<li><a href="#/items"></a></li>
+					<li><a href="#/patients"></a></li> -->
+
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<div class="container">
+
+	<div class="container-fluid">
 		<ng-view></ng-view>
 	</div>
 </body>

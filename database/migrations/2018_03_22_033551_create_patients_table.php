@@ -17,12 +17,12 @@ class CreatePatientsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('name');
-            $table->string('sex');
-            $table->string('phone');
+            $table->string('phone')->unique();
+            $table->string('gender');
+            $table->string('marriage');
+            $table->string('blood');
             $table->string('bio');
-       /*     $table->string('address');
-            $table->string('age');
-        */
+            $table->string('address');        
             $table->timestamps();
         
         });

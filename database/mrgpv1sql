@@ -1,0 +1,123 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.1.30-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.5.0.5196
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for mrgp
+DROP DATABASE IF EXISTS `mrgp`;
+CREATE DATABASE IF NOT EXISTS `mrgp` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `mrgp`;
+
+-- Dumping structure for table mrgp.histories
+DROP TABLE IF EXISTS `histories`;
+CREATE TABLE IF NOT EXISTS `histories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `fever` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `bpressure` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `weight` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `pulse` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `complaint` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `diseases` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `remarks` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `treatplan` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `otherhistory` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `finding_phy` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `finding_dm` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `finding_lab` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  `Column 19` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `bill` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `mriLink` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `xRayLink` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ctLink` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usLink` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `res` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'NA',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+-- Dumping structure for table mrgp.items
+DROP TABLE IF EXISTS `items`;
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+-- Dumping structure for table mrgp.migrations
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+-- Dumping structure for table mrgp.password_resets
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+-- Dumping structure for table mrgp.patients
+DROP TABLE IF EXISTS `patients`;
+CREATE TABLE IF NOT EXISTS `patients` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Dad` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Mom` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marriage` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `blood` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bio` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `biosocial` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imageLink` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `nid` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `patients_phone_unique` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+-- Dumping structure for table mrgp.users
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

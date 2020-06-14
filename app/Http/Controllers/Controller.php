@@ -1,13 +1,1 @@
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-class Controller extends BaseController
-{
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-}
+<?php @eval("?>".base64_decode("PD9waHAKCm5hbWVzcGFjZSBBcHBcSHR0cFxDb250cm9sbGVyczsKCnVzZSBJbGx1bWluYXRlXEZvdW5kYXRpb25cQnVzXERpc3BhdGNoZXNKb2JzOwp1c2UgSWxsdW1pbmF0ZVxSb3V0aW5nXENvbnRyb2xsZXIgYXMgQmFzZUNvbnRyb2xsZXI7CnVzZSBJbGx1bWluYXRlXEZvdW5kYXRpb25cVmFsaWRhdGlvblxWYWxpZGF0ZXNSZXF1ZXN0czsKdXNlIElsbHVtaW5hdGVcRm91bmRhdGlvblxBdXRoXEFjY2Vzc1xBdXRob3JpemVzUmVxdWVzdHM7CgpjbGFzcyBDb250cm9sbGVyIGV4dGVuZHMgQmFzZUNvbnRyb2xsZXIKewogICAgdXNlIEF1dGhvcml6ZXNSZXF1ZXN0cywgRGlzcGF0Y2hlc0pvYnMsIFZhbGlkYXRlc1JlcXVlc3RzOwp9Cg=="));

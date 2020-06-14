@@ -1,0 +1,272 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Home</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    Patients
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h1>Lunar </h1>
+        </div>
+        <div class="pull-right" style="padding-top:30px">
+            <div class="box-tools" style="display:inline-table">
+              <div class="input-group">
+                  <input type="text" class="form-control input-sm ng-valid ng-dirty" placeholder="Search" ng-change="searchDB()" ng-model="searchText" name="table_search" title="" tooltip="" data-original-title="Min character length is 3">
+                  <span class="input-group-addon">Search</span>
+              </div>
+            </div>
+            <button class="btn btn-success" data-toggle="modal" data-target="#create-user">Add New Patient</button>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered pagin-table">
+    <thead>
+        <tr>
+          <!--  <th>No</th> -->
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+         <!--   <th>Marital Status</th> -->
+            <th>Blood Type</th>
+        <!--    <th>Biography</th>
+            <th>Address</th> -->
+            <th>Phone</th>
+            <th width="220px">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+        <!--    <td>{{ $index + 1 }}</td> -->
+            <td>{{ value.id }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.age }}</td>
+            <td>{{ value.gender }}</td>
+        <!--    <td>{{ value.marriage }}</td> -->
+            <td>{{ value.blood }}</td>
+         <!--    <td>{{ value.bio }}</td>
+           <td>{{ value.address }}</td> -->
+            <td>{{ value.phone }}</td>
+            <td>
+            <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-data" class="btn btn-primary">View Bio</button>
+            <button  ng-click="history(value.id)"  class="btn btn-info">View History</button>
+           <!--  <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button> -->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+<!-- Create Modal -->
+<div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Patient</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Name : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.name" type="text" placeholder="Name" name="name" class="form-control" size="50" required />
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Age :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.age" type="text" placeholder="age" name="title" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-2">
+                            <strong>Gender :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.gender" ng-options="x for x in sex" required />              
+                            </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Marital Status :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.marriage" ng-options="x for x in marital" required />              
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Blood :</strong>
+                        <div class="form-group">
+                           <select ng-model="form.blood" ng-options="x for x in bloodtype" required />               
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Bio : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.bio" class="form-control" required>
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Phone :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.phone" type="text" placeholder="phone" name="phone" class="form-control" required />
+                            </div>
+                        </div>     
+                        <div class="row"></div>                                 
+                        <div class="col-md-4">
+                            <strong>Address : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.address" class="form-control" required>
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+                <input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Patient's Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Name : </strong>
+                            <div class="form-group">
+                                <input ng-model="form.name" type="text" placeholder="Name" name="name" class="form-control" size="50"  required />
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Age :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.age" type="text" placeholder="age" name="title" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-2">
+                            <strong>Gender :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.gender" ng-options="x for x in sex" required />              
+                            </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Marital Status :</strong>
+                            <div class="form-group">
+                           <select ng-model="form.marriage" ng-options="x for x in marital" required />              
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Blood :</strong>
+                        <div class="form-group">
+                           <select ng-model="form.blood" ng-options="x for x in bloodtype" required />               
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Bio : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.bio" class="form-control" required>
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Phone :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.phone" type="text" placeholder="phone" name="phone" class="form-control" required />
+                            </div>
+                        </div>     
+                        <div class="row"></div>                                 
+                        <div class="col-md-4">
+                            <strong>Address : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.address" class="form-control" required>
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- History Modal -->
+<div class="modal fade" id="history-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg"  style="" role="document">
+        <div class="modal-content">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#create-history">Add New Record </button>
+        <button type="button" class="btn btn-primary pull-right"  data-dismiss="modal">Close</button>
+
+            <table class="table table-bordered pagin-table">
+                <thead>
+                    <tr>
+                      <!--  <th>No</th> -->
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>History of Present Illness</th>
+                        <th>Treatment</th>
+                        <th>Other History</th>
+                        <th>Findings</th>
+                        <th width="220px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+                    <!--    <td>{{ $index + 1 }}</td> -->
+                        <td>{{ value.id }}</td>
+                        <td>{{ value.name }}</td>
+                        <td>{{ value.age }}</td>
+                        <td>{{ value.gender }}</td>
+                        <td>{{ value.marriage }}</td>
+                        <td>{{ value.blood }}</td>
+                          <td>
+                        <button data-toggle="modal" ng-click="edit(value.id)" data-target="#create-history" class="btn btn-primary">Edit</button>
+                        <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+        </div>
+    </div>
+</div>
+</div>
+

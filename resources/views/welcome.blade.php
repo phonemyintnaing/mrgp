@@ -46,7 +46,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 150px;
             }
 
             .links > a {
@@ -65,31 +65,43 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref " style="height:90%">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <!-- <a href="{{ route('register') }}">Register</a> -->
                     @endauth
                 </div>
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title m-b-lg">
                     Mr. GP
+                </div>
+                 <div class="content">
+                    <h2><i> Your day-to-day online health records and medical practice management application. </i></h3>
+                   <br>  
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
+                    <a href="http://imyansoft.com/mrgp.html">Wiki</a>
+                    <a href="http://imyansoft.com">Company</a>
+     <!--               <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a> -->
                 </div>
             </div>
+
         </div>
+                <!--FOOTER SECTION -->
+    <div class="content">
+      <h4> 2019 Init Myanmar Software Co. Ltd | All Right Reserved </h4>
+    </div>
+
+    <!-- END FOOTER SECTION -->
     </body>
+
 </html>

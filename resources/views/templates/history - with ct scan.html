@@ -1,0 +1,402 @@
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Patient Registration</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="#/patients">Patients List</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    {{name}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+     Name: {{name}} ,  Age: {{age}} , Gender: {{gender}} , Blood Type:{{blood}} , Allergy Information:{{bio}}
+ </div>
+ <div>
+ <button class="btn btn-success pull-right" data-toggle="modal" data-target="#create-history" ng-click="clearform()">Add New Record </button>
+
+            <table class="table table-bordered pagin-table">
+                <thead>
+                    <tr>
+                      <!--  <th>No</th> -->
+                        <th>ID</th>
+                 <!--       <th>History of Present Illness</th> -->
+                        <th>Complaint</th>
+                        <th>Treatment Plan</th>
+                        <th>Diseases</th>
+                        <th>Remarks</th>
+                     <!--   <th>Other History</th> -->
+                    <!--    <th width="200px">Findings</th> -->
+                        <th>Bill</th>
+                        <th width="180px">Visiting Date</th>
+                        <th width="150px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+                       <td>{{ ($index + 1) }} </td>
+                      <!--  <td>{{ value.id }}</td> -->
+              <!--          <td><b>Body Temprature:</b> <i>{{ value.fever }}</i> </br> <b>Blood:</b> <i>{{ value.bpressure}}</i> </br> <b>Weight:</b> <i>{{value.weight}}</i> </br> <b>Pluse:</b> <i>{{value.pulse}}</i></br> <b>Respiratory Rate:</b> <i>{{value.res}}</i></td> -->
+                        <td>{{value.complaint}} </td>
+                        <td>{{value.treatplan}} </td>
+                        <td>{{value.diseases}} </td>
+                        <td>{{value.remarks}} </td>
+                   <!--     <td>{{ value.otherhistory }}</td> -->
+                     <!--   <td>Phy: <i><b>{{ value.finding_phy}}</b></i> </br> Diagn: <i><b>{{value.finding_dm}}</b></i> </br> Lab: <i><b>{{value.finding_lab}}</b></i> </td> -->
+                        <td><b>{{ value.bill }}</b></td>
+                        <td>{{ value.created_at }}</td>
+                        <td>
+                    <!--    <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-history" class="btn btn-success">Edit</button> -->
+                        <button data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-history" class="btn btn-info">View Details</button>
+                      <!--  <button ng-click="remove(value,$index)" class="btn btn-danger">Delete</button> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
+
+ <!-- Add History  Modal -->
+<div class="modal fade" id="create-history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" style="width:80%" role="document">
+        <div class="modal-content">
+            <form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Patient's Visit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="row"></div>
+                         <div class="col-md-4"><h4 style="text-decoration: underline;"><b>Vitals</b></h4></div>
+                        <div class="row"></div>
+                        <div class="row"></div>
+
+                        <div class="col-md-2">
+                            <strong>Body Temprature (F):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.fever" type="text" placeholder="eg. 97.8-99 F" name="fever" class="form-control" style="width: 150px;"  />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Blood Pressure (mmHg):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.bpressure" type="text" placeholder="eg. 120/80 mmHg" name="title" class="form-control" style="width: 150px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Weight (lb):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.weight" type="text" placeholder="eg. 100 lb" name="weight" class="form-control" style="width: 150px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Pulse Rate (/min):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.pulse" type="text" placeholder="eg. 60-100 /min" name="title" class="form-control" style="width: 150px;" />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Respiratory Rate (/min):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.res" type="text" placeholder="eg. 12-16 /min" name="res" class="form-control" style="width: 150px;" />
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+                        <div class="col-md-4"><h4 style="text-decoration: underline;"><b>History of Present Illness</b></h4></div>
+                        <div class="row"></div>
+                        <div class="row"></div>
+
+                        <div class="col-md-2">
+                            <strong>Chief Complaint :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.complaint" class="form-control" style="width: 150px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Treatment : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.treatplan" class="form-control" style="width: 350px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                         <div class="col-md-4">
+                            <strong>Medication or Prescription : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.otherhistory" class="form-control" style="width: 250px;" >
+                                </textarea>
+                            </div>
+                        </div>  
+
+
+
+                        <div class="row"></div>
+
+ 
+                        <div class="row"></div>  
+                        <div class="col-md-2">
+                            <strong>Underlying Diseases :</strong>
+                               <div class="form-group" >
+                                <textarea ng-model="form.diseases" class="form-control" style="width: 150px;" >
+                                </textarea>
+                            </div>
+                        </div>                               
+                        <div class="col-md-2">
+                            <strong>Physical Examination :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.finding_phy" class="form-control" style="width: 150px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Diagnosis (eg. DM) :</strong>
+                               <div class="form-group" >
+                                <textarea ng-model="form.finding_dm" class="form-control"  style="width: 150px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Laboratory Finding :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.finding_lab" class="form-control"  style="width: 150px;">
+                                </textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="row"></div>                                 
+                         <div class="col-md-2">
+                            <strong>X-Ray : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadXray(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>MRI(Magnetic Resonance Imaging) : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadMRI(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                
+                            </div>
+                        </div>
+                         <div class="col-md-2">
+                            <strong>CT(Computer Tomography) : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadCT(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Ultrasound : </strong>
+                            <div class="form-group">
+                                <input type="file" name="file" onchange="angular.element(this).scope().uploadUS(this.files)">
+                                <br/>
+                                <img ng-src="{{image_scource}}" style="width: 300px;">
+                                
+                            </div>
+                        </div>
+                        <div class="row"></div>  
+
+                    <div class="col-md-2">
+                            <strong>Bill :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.bill" type="text" placeholder="kyats" name="title" class="form-control" style="width: 150px;" />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Notes :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.remarks" class="form-control" style="width: 150px;" >
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit"  class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit History  Modal -->
+<div class="modal fade" id="edit-history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"x id="myModalLabel">Patient's Visit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="row"></div>
+                         <div class="col-md-4"><h4><b>History of Present Illness</b></h4></div>
+                        <div class="row"></div>
+                        <div class="row"></div>
+
+                        <div class="col-md-2">
+                            <strong>Body Temprature (F):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.fever" type="text" placeholder="eg. 97.8-99 F" name="fever" class="form-control"  />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>Blood Pressure (mmHg):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.bpressure" type="text" placeholder="eg. 120/80 mmHg" name="title" class="form-control"  />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Weight (lb):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.weight" type="text" placeholder="eg. 100 lb" name="weight" class="form-control"  />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Pulse Rate (/min):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.pulse" type="text" placeholder="eg. 60-100 /min" name="title" class="form-control"  />
+                            </div>
+                        </div> 
+                        <div class="row"></div>
+                        <div class="col-md-2">
+                            <strong>Respiratory Rate (/min):</strong>
+                            <div class="form-group">
+                                <input ng-model="form.res" type="text" placeholder="eg. 12-16 /min" name="res" class="form-control"  />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Chief Complaint :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.complaint" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Underlying Diseases :</strong>
+                               <div class="form-group" >
+                                <textarea ng-model="form.diseases" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Remarks :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.remarks" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+                        <div class="col-md-4">
+                            <strong>Treatment : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.treatplan" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Other History : </strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.otherhistory" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>   
+                        <div class="row"></div>                                 
+                        <div class="col-md-2">
+                            <strong>Physical Examination :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.finding_phy" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Diagnosis (eg. DM) :</strong>
+                               <div class="form-group" >
+                                <textarea ng-model="form.finding_dm" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Laboratory Finding :</strong>
+                            <div class="form-group" >
+                                <textarea ng-model="form.finding_lab" class="form-control" >
+                                </textarea>
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>X-Ray : </strong>
+                            <div class="form-group">
+                             <button type="button" class="btn btn-default" data-toggle="modal" ng-click="changeLabel('0')" data-target="#myModal">View image</button>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>                                 
+                        <div class="col-md-2">
+                            <strong>Bill :</strong>
+                            <div class="form-group">
+                                <input ng-model="form.bill" type="text" placeholder="kyats" name="title" class="form-control"  />
+                            </div>
+                        </div> 
+                        <div class="col-md-2">
+                            <strong>MRI(Magnetic Resonance Imaging) : </strong>
+                            <div class="form-group">
+                             <button type="button" class="btn btn-default" data-toggle="modal" ng-click="changeLabel('1')" data-target="#myModal">View image</button>
+                            </div>
+                        </div>
+                         <div class="col-md-2">
+                            <strong>CT(Computer Tomography) : </strong>
+                            <div class="form-group">
+                             <button type="button" class="btn btn-default" data-toggle="modal" ng-click="changeLabel('2')" data-target="#myModal">View image</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>Ultrasound : </strong>
+                            <div class="form-group">
+                             <button type="button" class="btn btn-default" data-toggle="modal" ng-click="changeLabel('3')" data-target="#myModal">View image</button>
+                            </div>
+                        </div> 
+                    </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                 <!--   <button type="submit"  class="btn btn-primary">Submit</button> -->
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>   
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+                        <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{label}}</h4>
+            </div>
+        <div class="modal-body ">
+            <img src="/mrgp/public/{{popImage}}" class="img-responsive">
+        </div>
+    </div>
+  </div>
+</div>        
+
+</div>           
